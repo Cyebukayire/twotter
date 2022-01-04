@@ -8,7 +8,8 @@
             {{followers}}
             <hr> 
         </div>        
-    <form class="user-profile__create-twoot" @submit.prevent="createNewTwoot()" :class="{ '--exceeded': newTwootCharacterCount > 180}">
+    <form class="user-profile__create-twoot" 
+    @submit.prevent="createNewTwoot()" :class="{ '--exceeded': newTwootCharacterCount > 180}">
       <label for="newTwoot"><strong>New Twoot</strong> {{ newTwootCharacterCount }}/180</label>
       <textarea id="newTwoot" rows="4" v-model="newTwootContent"/>
 
@@ -90,13 +91,13 @@ export default {
       console.log(`Favourited Tweet #${id}`)
     },
     createNewTwoot() {
-      if(this.newTwootContent && this.selectedTwootType !== 'draft') {
+      if(this.newTwootContent.length<180 && this.selectedTwootType !== 'draft') {
         this.user.twoots.unshift( {
           id: this.user.twoots.length +1,
           content: this.newTwootContent
         })
+        this.newTwootContent=""
       }
-      this.newTwootContent=""
     }
   },
   // Runs the functions before the first time to be called
@@ -142,12 +143,12 @@ export default {
         display: flex;
         flex-direction: column;
 
-        .--exceeded {
+        &.--exceeded {
           color: red;
           border-color: red;
         }
 
-        .--exceeded button {
+        &.--exceeded button {
           background-color: red;
           border: none;
           color: white;
