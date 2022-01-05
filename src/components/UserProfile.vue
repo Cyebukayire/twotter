@@ -91,11 +91,12 @@ export default {
       console.log(`Favourited Tweet #${id}`)
     },
     createNewTwoot() {
-      if(this.newTwootContent.length<180 && this.selectedTwootType !== 'draft') {
+      if((this.newTwootContent.length<180 || this.newTwootContent.length==180) && this.newTwootContent.length!=0 && this.selectedTwootType !== 'draft') {
         this.user.twoots.unshift( {
           id: this.user.twoots.length +1,
           content: this.newTwootContent
         })
+        console.log(this.newTwootContent.length)
         this.newTwootContent=""
       }
     }
