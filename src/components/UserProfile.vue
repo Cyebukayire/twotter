@@ -7,26 +7,8 @@
             <strong>Followers:</strong> 
             {{followers}}
             <hr> 
-        </div>        
-    <form class="user-profile__create-twoot" 
-    @submit.prevent="createNewTwoot()" :class="{ '--exceeded': newTwootCharacterCount > 180}">
-      <label for="newTwoot"><strong>New Twoot</strong> {{ newTwootCharacterCount }}/180</label>
-      <textarea id="newTwoot" rows="4" v-model="newTwootContent"/>
-
-      <div class="user-profile__create-twoot-type">
-        <lable for="newTwootType"><strong>Type: </strong>
-        <select id="newTwootType" v-model="selectedTwootType">
-          <option 
-          :value="option.value" 
-          v-for="(option, index) in twootTypes" 
-          :key="index">
-            {{ option.name }}
-          </option>
-        </select>
-        </lable>
-      </div>
-      <button>Twoot!</button>
-    </form>
+        </div>
+        <CreateNewTwootPanel/>
     </div>
  
     <div class="user-profile__twoots-wrapper">
@@ -44,18 +26,13 @@
 
 <script>
 import TwootItem from "./TwootItem.vue"
+import CreateNewTwootPanel from "./CreateNewTwootPanel.vue"
 
 export default {
   name: 'UserProfile',
-  components: { TwootItem },
+  components: { TwootItem, CreateNewTwootPanel },
   data() {
     return {
-      newTwootContent: '',
-      selectedTwootType: 'instant',
-      twootTypes: [
-        { value: 'draft', name: 'Draft' },
-        { value: 'instant', name: 'Instant Twoot' }
-      ],
       followers: 0,
       user: {
         id: 1,
@@ -71,6 +48,7 @@ export default {
       }
     }
   },
+
   watch: {
     followers(newFollowerCount, oldFollowerCount) {
       if (oldFollowerCount < newFollowerCount) {
@@ -78,11 +56,7 @@ export default {
       }
     }
   },
-  computed: {
-    newTwootCharacterCount() {
-      return this.newTwootContent.length;
-    }
-  },
+
   methods: {
     followUser() {
       this.followers++;
@@ -90,16 +64,6 @@ export default {
     toogleFavourite(id){
       console.log(`Favourited Tweet #${id}`)
     },
-    createNewTwoot() {
-      if((this.newTwootContent.length<180 || this.newTwootContent.length==180) && this.newTwootContent.length!=0 && this.selectedTwootType !== 'draft') {
-        this.user.twoots.unshift( {
-          id: this.user.twoots.length +1,
-          content: this.newTwootContent
-        })
-        console.log(this.newTwootContent.length)
-        this.newTwootContent=""
-      }
-    }
   },
   // Runs the functions before the first time to be called
   mounted() {
@@ -108,7 +72,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 .user-profile {
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -137,23 +101,6 @@ export default {
           font-weight: bold;
           margin-bottom: 20px;
           margin-top: 20px;
-      }
-
-      .user-profile__create-twoot {
-        padding-top: 20px;
-        display: flex;
-        flex-direction: column;
-
-        &.--exceeded {
-          color: red;
-          border-color: red;
-        }
-
-        &.--exceeded button {
-          background-color: red;
-          border: none;
-          color: white;
-        }
       }
     }
 
