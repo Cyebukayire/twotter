@@ -1,11 +1,12 @@
 <template>
     <!-- <div class="create-newtwoot-panel"> -->
-    <form class="user-profile__create-twoot" 
+    <form class="create-newtwoot-panel" 
     @submit.prevent="createNewTwoot()" :class="{ '--exceeded': newTwootCharacterCount > 180}">
       <label for="newTwoot"><strong>New Twoot</strong> {{ newTwootCharacterCount }}/180</label>
       <textarea id="newTwoot" rows="4" v-model="newTwootContent"/>
 
-      <div class="user-profile__create-twoot-type">
+      <div class="create-newtwoot-panel__submit">
+      <div class="create-newtwoot-panel__create-twoot-type">
         <lable for="newTwootType"><strong>Type: </strong>
         <select id="newTwootType" v-model="selectedTwootType">
           <option 
@@ -18,6 +19,7 @@
         </lable>
       </div>
       <button>Twoot!</button>
+      </div>
     </form>
     <!-- </div> -->
 </template>
@@ -42,13 +44,11 @@ export default {
   },
   methods: {
         createNewTwoot() {
+          console.log('creating twoot')
             if((this.newTwootContent.length<180 || this.newTwootContent.length==180) && this.newTwootContent.length!=0 && this.selectedTwootType !== 'draft') {
-                this.user.twoots.unshift( {
-                    id: this.user.twoots.length +1,
-                    content: this.newTwootContent
-                })
+                this.$emit('add-twoot', this.newTwootContent)
                 console.log(this.newTwootContent.length)
-                this.newTwootContent=""
+                this.newTwootContent = '';
             }
         }
   }
@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-      .user-profile__create-twoot {
+      .create-newtwoot-panel {
         padding-top: 20px;
         display: flex;
         flex-direction: column;
@@ -64,12 +64,37 @@ export default {
         &.--exceeded {
           color: red;
           border-color: red;
+
+          button {
+            background-color: red;
+            border: none;
+            color: white;
+          }
+        }
+        
+        textarea {
+          border: 1px solid #DFE3E8;
+          border-radius: 5px;
         }
 
-        &.--exceeded button {
-          background-color: red;
-          border: none;
-          color: white;
+        .create-newtwoot-panel__submit {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 15px;
+
+          .create-twoot-type {
+            padding: 10px 0;
+          }
+
+          button {
+            padding: 5px 20px;
+            margin: auto 0;
+            border-radius: 5px;
+            border: none;
+            background-color: deeppink;
+            color: white;
+            font-weight: bold;
+          }
         }
       }
 </style>

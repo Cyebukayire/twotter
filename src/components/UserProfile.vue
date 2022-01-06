@@ -1,5 +1,6 @@
 <template>
 <div  class="user-profile">
+  <div class="user-profile__sidebar">
     <div class="user-profile__user-panel">
         <h1 class="user-profile__username">@{{ user.username }}</h1>
         <div class="user-profile__admin-badge" v-if="user.isAdmin">Admin</div>
@@ -8,19 +9,17 @@
             {{followers}}
             <hr> 
         </div>
-        <CreateNewTwootPanel/>
     </div>
- 
+    <CreateNewTwootPanel @add-twoot="addTwoot"/>
+</div>
     <div class="user-profile__twoots-wrapper">
         <TwootItem 
         v-for="twoot in user.twoots" 
         :key="twoot.id" 
         :username="user.username" 
         :twoot="twoot" 
-        @favourite="toogleFavourite"
         />
     </div>
-    
 </div>
 </template>
 
@@ -58,17 +57,14 @@ export default {
   },
 
   methods: {
-    followUser() {
-      this.followers++;
-    },
-    toogleFavourite(id){
-      console.log(`Favourited Tweet #${id}`)
-    },
+    addTwoot(twoot) {
+      this.user.twoots.unshift({id: this.user.twoots.length +1, content: twoot})
+    }
   },
   // Runs the functions before the first time to be called
-  mounted() {
-    this.followUser();
-  }
+  // mounted() {
+  //   this.followUser();
+  // }
 }
 </script>
 
@@ -82,11 +78,11 @@ export default {
     .user-profile__user-panel {
       display: flex;
       flex-direction: column;
-      margin-right: auto;
       padding: 20px;
       background-color: white;
       border-radius: 5px;
       border: 1px solid #DFE3E8;
+      margin-bottom: auto;
       
       h1 {
         margin: 0;
@@ -99,16 +95,14 @@ export default {
           margin-right: auto;
           padding: 0 10px;
           font-weight: bold;
-          margin-bottom: 20px;
-          margin-top: 20px;
       }
     }
 
     .user-profile__twoots-wrapper {
       display: grid;
       grid-gap: 10px;
+      margin-bottom: auto;
     }
-
 }
 
 </style>
