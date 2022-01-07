@@ -2,11 +2,11 @@
 <div  class="user-profile">
   <div class="user-profile__sidebar">
     <div class="user-profile__user-panel">
-        <h1 class="user-profile__username">@{{ user.username }}</h1>
-        <div class="user-profile__admin-badge" v-if="user.isAdmin">Admin</div>
+        <h1 class="user-profile__username">@{{ state.user.username }}</h1>
+        <div class="user-profile__admin-badge" v-if="state.user.isAdmin">Admin</div>
         <div class="user-profile__follower-count">  
             <strong>Followers:</strong> 
-            {{followers}}
+            {{state.followers}}
             <hr> 
         </div>
     </div>
@@ -14,24 +14,26 @@
 </div>
     <div class="user-profile__twoots-wrapper">
         <TwootItem 
-        v-for="twoot in user.twoots" 
+        v-for="twoot in state.user.twoots" 
         :key="twoot.id" 
-        :username="user.username" 
+        :username="state.user.username" 
         :twoot="twoot" 
         />
     </div>
 </div>
 </template>
 
-<script>
+<script> 
+import {reactive} from 'vue'
 import TwootItem from "./TwootItem.vue"
 import CreateNewTwootPanel from "./CreateNewTwootPanel.vue"
 
 export default {
+  
   name: 'UserProfile',
   components: { TwootItem, CreateNewTwootPanel },
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       followers: 0,
       user: {
         id: 1,
@@ -45,22 +47,18 @@ export default {
             {id: 2, content: "Dont' forget to subscribe to the Earth is Sqare!"}
         ]
       }
-    }
-  },
+    })
 
-  watch: {
-    followers(newFollowerCount, oldFollowerCount) {
-      if (oldFollowerCount < newFollowerCount) {
-        console.log(`@${this.user.username} has gained a follower`)
-      }
-    }
-  },
-
-  methods: {
-    addTwoot(twoot) {
+    function addTwoot(twoot) {
       this.user.twoots.unshift({id: this.user.twoots.length +1, content: twoot})
     }
-  },
+
+    return {
+      state,
+      addTwoot
+    }
+  }
+
   // Runs the functions before the first time to be called
   // mounted() {
   //   this.followUser();

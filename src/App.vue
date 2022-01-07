@@ -13,6 +13,8 @@
 </template>
 
 <script>
+// import { reactive } from 'vue'
+
 import UserProfile from "./components/UserProfile.vue"
 
 export default {
@@ -20,6 +22,20 @@ export default {
   components: {
     UserProfile
   },
+
+  //  setup() {
+  //   const state = reactive({
+  //     user: {
+  //       username: '_PeaceAida'
+  //     }
+  //   })
+
+  //   return {
+  //     state
+  //   }
+  // }
+
+
   data() {
     return {
       user: {

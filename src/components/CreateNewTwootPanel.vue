@@ -25,33 +25,60 @@
 </template>
 
 <script>
+import {reactive, computed} from 'vue'
+
 export default {
     name: 'CreateNewTwootPanel',
-    data(){
-        return {
-            newTwootContent: '',
-            selectedTwootType: 'instant',
-            twootTypes: [
-                { value: 'draft', name: 'Draft' },
-                { value: 'instant', name: 'Instant Twoot' }
-            ],
-        }
-    },
-    computed: {
-        newTwootCharacterCount() {
-        return this.newTwootContent.length;
-        }
-  },
-  methods: {
-        createNewTwoot() {
-          console.log('creating twoot')
-            if((this.newTwootContent.length<180 || this.newTwootContent.length==180) && this.newTwootContent.length!=0 && this.selectedTwootType !== 'draft') {
-                this.$emit('add-twoot', this.newTwootContent)
-                console.log(this.newTwootContent.length)
-                this.newTwootContent = '';
-            }
-        }
-  }
+    setup(props, ctx) {
+      const state = reactive({  
+          newTwootContent: '',
+          selectedTwootType: 'instant',
+          twootTypes: [
+              { value: 'draft', name: 'Draft' },
+              { value: 'instant', name: 'Instant Twoot' }
+          ],
+      })
+
+      const newTwootCharacterCount = computed(() => state.newTwootContent.length)
+      
+      function createNewTwoot() {
+          if((state.newTwootContent.length<180 || state.newTwootContent.length==180) && state.newTwootContent.length!=0 && state.selectedTwootType !== 'draft') {
+              ctx.$emit('add-twoot', state.newTwootContent)
+              state.newTwootContent = ''
+          }
+      }
+
+      return ( 
+        state,
+        newTwootCharacterCount,
+        createNewTwoot
+      )
+    }
+  //   data(){
+  //       return {
+  //           newTwootContent: '',
+  //           selectedTwootType: 'instant',
+  //           twootTypes: [
+  //               { value: 'draft', name: 'Draft' },
+  //               { value: 'instant', name: 'Instant Twoot' }
+  //           ],
+  //       }
+  //   },
+  //   computed: {
+  //       newTwootCharacterCount() {
+  //       return this.newTwootContent.length;
+  //       }
+  // },
+  // methods: {
+  //       createNewTwoot() {
+  //         console.log('creating twoot')
+  //           if((this.newTwootContent.length<180 || this.newTwootContent.length==180) && this.newTwootContent.length!=0 && this.selectedTwootType !== 'draft') {
+  //               this.$emit('add-twoot', this.newTwootContent)
+  //               console.log(this.newTwootContent.length)
+  //               this.newTwootContent = '';
+  //           }
+  //       }
+  // }
 }
 </script>
 
