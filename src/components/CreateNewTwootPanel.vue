@@ -3,20 +3,20 @@
     <form class="create-newtwoot-panel" 
     @submit.prevent="createNewTwoot()" :class="{ '--exceeded': newTwootCharacterCount > 180}">
       <label for="newTwoot"><strong>New Twoot</strong> {{ newTwootCharacterCount }}/180</label>
-      <textarea id="newTwoot" rows="4" v-model="newTwootContent"/>
+      <textarea id="newTwoot" rows="4" v-model="state.newTwootContent"/>
 
       <div class="create-newtwoot-panel__submit">
       <div class="create-newtwoot-panel__create-twoot-type">
-        <lable for="newTwootType"><strong>Type: </strong>
-        <select id="newTwootType" v-model="selectedTwootType">
+        <!-- <lable for="newTwootType"><strong>Type: </strong></lable> -->
+        <strong>Type: </strong>
+        <select id="newTwootType" v-model="state.selectedTwootType">
           <option 
           :value="option.value" 
-          v-for="(option, index) in twootTypes" 
+          v-for="(option, index) in state.twootTypes" 
           :key="index">
             {{ option.name }}
           </option>
         </select>
-        </lable>
       </div>
       <button>Twoot!</button>
       </div>
@@ -43,16 +43,16 @@ export default {
       
       function createNewTwoot() {
           if((state.newTwootContent.length<180 || state.newTwootContent.length==180) && state.newTwootContent.length!=0 && state.selectedTwootType !== 'draft') {
-              ctx.$emit('add-twoot', state.newTwootContent)
+              ctx.emit('add-twoot', state.newTwootContent)
               state.newTwootContent = ''
           }
       }
 
-      return ( 
+      return {
         state,
         newTwootCharacterCount,
         createNewTwoot
-      )
+    }
     }
   //   data(){
   //       return {
