@@ -24,15 +24,19 @@
 </template>
 
 <script> 
-import {reactive} from 'vue'
-import TwootItem from "./TwootItem.vue"
-import CreateNewTwootPanel from "./CreateNewTwootPanel.vue"
+import { reactive, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import TwootItem from "../components/TwootItem.vue"
+import CreateNewTwootPanel from "../components/CreateNewTwootPanel.vue"
 
 export default {
   
   name: 'UserProfile',
   components: { TwootItem, CreateNewTwootPanel },
   setup() {
+    const route = useRoute();
+    const userId = computed(() => route.params.userId)
+
     const state = reactive({
       followers: 0,
       user: {
@@ -55,7 +59,8 @@ export default {
 
     return {
       state,
-      addTwoot
+      addTwoot,
+      userId
     }
   }
 

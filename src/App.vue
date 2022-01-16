@@ -8,20 +8,15 @@
       {{ user.username }}
     </div>
   </nav>
-  <UserProfile/>
+  <router-view/>
 </div>
 </template>
 
 <script>
 // import { reactive } from 'vue'
 
-import UserProfile from "./components/UserProfile.vue"
-
 export default {
   name: 'App',
-  components: {
-    UserProfile
-  },
 
   //  setup() {
   //   const state = reactive({
