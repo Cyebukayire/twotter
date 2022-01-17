@@ -1,5 +1,4 @@
-{
-    "users": [
+export const users = [
         {
             "id": 1,
             "username": "_Peace",
@@ -20,8 +19,8 @@
             "email": "musa@rw.com",
             "isAdmin": false,
             "twoots": [
-                { "id": 1, "content": "This is Amazing!"},
-                { "id": 2, "content": "Don't forget to subscribe."}
+                { "id": 1, "content": "I am Musa"},
+                { "id": 2, "content": "Love how Peace is creative."}
             ]
         },
         {
@@ -32,9 +31,17 @@
             "email": "bella@rw.com",
             "isAdmin": false,
             "twoots": [
-                { "id": 1, "content": "This is Amazing!"},
-                { "id": 2, "content": "Don't forget to subscribe."}
+                { "id": 1, "content": "Yeaaaaahhh"},
+                { "id": 2, "content": "Who thought that I could actually get this far?"}
             ]
+        },
+        {
+            "id": 4,
+            "username": "Ketty",
+            "firstname": "Kerve",
+            "lastname": "Kellia",
+            "email": "ketty@rw.com",
+            "isAdmin": false,
+            "twoots": []
         }
     ]
-}

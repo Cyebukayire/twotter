@@ -1,12 +1,17 @@
 <template>
 <div id="app">
   <nav>
-    <div class="navigation__logo">
-      Twotter
-    </div>
-    <div class="navigation__user">
-      {{ user.username }}
-    </div>
+    <router-link to='/'>
+        <div class="navigation__logo">
+          Twotter
+          </div>
+    </router-link>
+
+    <router-link to="/">
+      <div class="navigation__user">
+        {{ user.username }}
+      </div>
+    </router-link>
   </nav>
   <router-view/>
 </div>
