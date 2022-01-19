@@ -19,7 +19,7 @@
 
 <script>
 // import { reactive } from 'vue'
-import { useStore } from 'vue'
+import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
